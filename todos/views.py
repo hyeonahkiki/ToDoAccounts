@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from IPython import embed
-
+from .forms import TodoForm
 
 # Create your views here.
 def index(request):
@@ -19,3 +19,18 @@ def index(request):
     # }
     return render(request, 'todos/index.html')
 
+def create(request):
+    if request.method =='POST':
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            todo = form.save(commit=False)
+            # todo에 비어있는 정보가 user
+            todo.user = request.user
+            todo.save()
+            return redirect('todos:index')
+    else:
+        form = TodoForm()
+    context ={
+        'form': form,
+    }
+    return render(request, 'todos/form.html', context)
