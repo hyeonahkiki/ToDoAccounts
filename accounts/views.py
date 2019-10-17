@@ -21,6 +21,8 @@ def signup(request):
     }
     return render(request, 'accounts/form.html', context)
 
+
+
 def login(request):
     if request.user.is_authenticated:
         return redirect('todos:index')
@@ -28,12 +30,13 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('todos:index')
+            return redirect(request.GET.get('next') or'todos:index')
     else:
         form = AuthenticationForm()
     context = {
         'form':form,
     }
+
     return render(request, 'accounts/form.html', context)
 
 def logout(request):
