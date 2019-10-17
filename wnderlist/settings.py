@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# 지금보고 있는 현재폴더의 최상단을 가르키고 있음
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +57,9 @@ ROOT_URLCONF = 'wnderlist.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 경로를 만들어주는 함수설정
+        'DIRS': [os.path.join(BASE_DIR, 'wnderlist', 'templates')],
+        # 모든 templates를 탐색해서 가져온다
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
